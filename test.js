@@ -1,0 +1,11 @@
+const { JSDOM } = require('jsdom');
+const jsonpatch = require('fast-json-patch');
+const fs = require('fs');
+const src = fs.readFileSync('./updateComponent.js', 'utf8');
+const dom = new JSDOM(`<!DOCTYPE html><div id="app"><h1 data-key="title"></h1><ul data-key="items"></ul></div>`, { runScripts: "outside-only" });
+dom.window.jsonpatch = jsonpatch;
+dom.window.eval(src);
+const component = new dom.window.JSONUpdater(dom.window.document.getElementById('app'));
+component.setState({ title: 'A', items: ['x', 'y'] });
+component.setState({ title: 'B', items: ['x', 'z', 'y'] });
+console.log(dom.window.document.getElementById('app').outerHTML);
