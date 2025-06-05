@@ -1,0 +1,6 @@
+{
+  "name": "My Plugin",
+  "version": "1.0.0",
+  "type": "component",
+  "main": "src/index.js"
+}
