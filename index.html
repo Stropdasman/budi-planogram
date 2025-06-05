@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>JSON Update Component</title>
+</head>
+<body>
+  <div id="app">
+    <h1 data-key="title"></h1>
+    <ul data-key="items"></ul>
+  </div>
+  <script src="fast-json-patch.min.js"></script>
+  <script src="updateComponent.js"></script>
+  <script>
+    const root = document.getElementById('app');
+    const component = new JSONUpdater(root);
+
+    const initialState = {title: 'Fruit List', items: ['Apple', 'Banana', 'Orange']};
+    component.setState(initialState);
+
+    setTimeout(() => {
+      const newState = {title: 'Fruit List', items: ['Apple', 'Cherry', 'Orange', 'Grape']};
+      component.setState(newState);
+    }, 2000);
+  </script>
+</body>
+</html>
