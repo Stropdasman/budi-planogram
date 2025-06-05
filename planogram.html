@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Planogram</title>
+  <style>
+    #planogram { font-family: sans-serif; }
+    .row { display: flex; margin-bottom: 10px; }
+    .product { margin-right: 5px; }
+    .product img { width: 80px; height: 80px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <div id="planogram"></div>
+  <script>
+    const planogramData = [
+      {"rowIndex":0,"columnCount":5,"columns":[{"colIndex":0,"product_id":14002,"capacity":9,"spiralCount":2,"selection_number":"11"},{"colIndex":1,"product_id":"14003","capacity":9,"spiralCount":2,"selection_number":"12"},{"colIndex":2,"product_id":14006,"capacity":14,"spiralCount":1,"selection_number":"13"},{"colIndex":3,"product_id":"11017","capacity":"14","spiralCount":2,"selection_number":"14"},{"colIndex":4,"product_id":"11016","capacity":"14","spiralCount":2,"selection_number":"15"}]},
+      {"rowIndex":1,"columnCount":9,"columns":[{"colIndex":0,"product_id":"12022","capacity":"14","spiralCount":1,"selection_number":"21"},{"colIndex":1,"product_id":"12020","capacity":"14","spiralCount":1,"selection_number":"22"},{"colIndex":2,"product_id":"12027","capacity":"14","spiralCount":1,"selection_number":"23"},{"colIndex":3,"product_id":"12029","capacity":"14","spiralCount":1,"selection_number":"24"},{"colIndex":4,"product_id":"12003","capacity":"18","spiralCount":1,"selection_number":"25"},{"colIndex":5,"product_id":"12013","capacity":"14","spiralCount":1,"selection_number":"26"},{"colIndex":6,"product_id":"12018","capacity":"14","spiralCount":1,"selection_number":"27"},{"colIndex":7,"product_id":"12007","capacity":"14","spiralCount":1,"selection_number":"28"},{"colIndex":8,"product_id":"12004","capacity":"14","spiralCount":1,"selection_number":"29"}]},
+      {"rowIndex":2,"columnCount":7,"columns":[{"colIndex":0,"product_id":"13003","capacity":"18","spiralCount":1,"selection_number":"31"},{"colIndex":1,"product_id":"13005","capacity":"14","spiralCount":1,"selection_number":"32"},{"colIndex":2,"product_id":"13010","capacity":"14","spiralCount":1,"selection_number":"33"},{"colIndex":3,"product_id":"13011","capacity":"14","spiralCount":1,"selection_number":"34"},{"colIndex":4,"product_id":"12016","capacity":"14","spiralCount":1,"selection_number":"35"},{"colIndex":5,"product_id":"12031","capacity":"14","spiralCount":1,"selection_number":"36"},{"colIndex":6,"product_id":"13004","capacity":"14","spiralCount":1,"selection_number":"37"}]},
+      {"rowIndex":3,"columnCount":9,"columns":[{"colIndex":0,"product_id":"10601","capacity":6,"spiralCount":1,"selection_number":"41"},{"colIndex":1,"product_id":"10619","capacity":6,"spiralCount":1,"selection_number":"42"},{"colIndex":2,"product_id":"10621","capacity":6,"spiralCount":1,"selection_number":"43"},{"colIndex":3,"product_id":"10608","capacity":6,"spiralCount":1,"selection_number":"44"},{"colIndex":4,"product_id":"10607","capacity":6,"spiralCount":1,"selection_number":"45"},{"colIndex":5,"product_id":"10705","capacity":6,"spiralCount":1,"selection_number":"46"},{"colIndex":6,"product_id":"10705","capacity":6,"spiralCount":1,"selection_number":"47"},{"colIndex":7,"product_id":"10706","capacity":6,"spiralCount":1,"selection_number":"48"},{"colIndex":8,"product_id":"10706","capacity":6,"spiralCount":1,"selection_number":"49"}]},
+      {"rowIndex":4,"columnCount":9,"columns":[{"colIndex":0,"product_id":"10127","capacity":6,"spiralCount":1,"selection_number":"51"},{"colIndex":1,"product_id":"10127","capacity":6,"spiralCount":1,"selection_number":"52"},{"colIndex":2,"product_id":"10127","capacity":6,"spiralCount":1,"selection_number":"53"},{"colIndex":3,"product_id":"10127","capacity":6,"spiralCount":1,"selection_number":"54"},{"colIndex":4,"product_id":"10127","capacity":6,"spiralCount":1,"selection_number":"55"},{"colIndex":5,"product_id":"10127","capacity":6,"spiralCount":1,"selection_number":"56"},{"colIndex":6,"product_id":"10127","capacity":6,"spiralCount":1,"selection_number":"57"},{"colIndex":7,"product_id":"10137","capacity":6,"spiralCount":1,"selection_number":"58"},{"colIndex":8,"product_id":"10131","capacity":6,"spiralCount":1,"selection_number":"59"}]},
+      {"rowIndex":5,"columnCount":9,"columns":[{"colIndex":0,"product_id":"10131","capacity":6,"spiralCount":1,"selection_number":"61"},{"colIndex":1,"product_id":"10229","capacity":6,"spiralCount":1,"selection_number":"62"},{"colIndex":2,"product_id":"10229","capacity":6,"spiralCount":1,"selection_number":"63"},{"colIndex":3,"product_id":"10229","capacity":6,"spiralCount":1,"selection_number":"64"},{"colIndex":4,"product_id":"10229","capacity":6,"spiralCount":1,"selection_number":"65"},{"colIndex":5,"product_id":"10141","capacity":"7","spiralCount":1,"selection_number":"66"},{"colIndex":6,"product_id":"10141","capacity":"7","spiralCount":1,"selection_number":"67"},{"colIndex":7,"product_id":"10139","capacity":"7","spiralCount":1,"selection_number":"68"},{"colIndex":8,"product_id":"10134","capacity":"7","spiralCount":1,"selection_number":"69"}]},
+      {"rowIndex":6,"columnCount":9,"columns":[{"colIndex":0,"product_id":"10214","capacity":"7","spiralCount":1,"selection_number":"71"},{"colIndex":1,"product_id":"10214","capacity":"7","spiralCount":1,"selection_number":"72"},{"colIndex":2,"product_id":"10120","capacity":"7","spiralCount":1,"selection_number":"73"},{"colIndex":3,"product_id":"10120","capacity":"7","spiralCount":1,"selection_number":"74"},{"colIndex":4,"product_id":"10120","capacity":"7","spiralCount":1,"selection_number":"75"},{"colIndex":5,"product_id":"10120","capacity":"7","spiralCount":1,"selection_number":"76"},{"colIndex":6,"product_id":"10120","capacity":"7","spiralCount":1,"selection_number":"77"},{"colIndex":7,"product_id":"10120","capacity":"7","spiralCount":1,"selection_number":"78"},{"colIndex":8,"product_id":"10120","capacity":"7","spiralCount":1,"selection_number":"79"}]}
+    ];
+
+    function createPlaceholderImage(productId) {
+      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'>`+
+        `<rect width='100%' height='100%' fill='#eee'/>`+
+        `<text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='#333' font-size='12'>${productId}</text>`+
+        `</svg>`;
+      return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+    }
+
+    const root = document.getElementById('planogram');
+
+    planogramData.forEach(row => {
+      const rowDiv = document.createElement('div');
+      rowDiv.className = 'row';
+      row.columns.forEach(col => {
+        const prodDiv = document.createElement('div');
+        prodDiv.className = 'product';
+        const img = document.createElement('img');
+        img.src = createPlaceholderImage(col.product_id);
+        img.alt = col.product_id;
+        prodDiv.appendChild(img);
+        rowDiv.appendChild(prodDiv);
+      });
+      root.appendChild(rowDiv);
+    });
+  </script>
+</body>
+</html>
